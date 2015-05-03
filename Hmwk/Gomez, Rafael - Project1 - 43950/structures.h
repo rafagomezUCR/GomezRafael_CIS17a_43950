@@ -16,10 +16,11 @@ struct Card
 
 struct Casino
 {
-    int chips;
-    int games;
-    int wins;
-    int loses;
+    int chips = 100;
+    int games = 0;
+    int wins = 0;
+    int loses = 0;
+    int *results;
 };
 
 #endif	/* STRUCTURES_H */
