@@ -29,10 +29,10 @@ int main(int argc, char** argv) {
     Card deck[52];
     Casino casino;
     create(deck);
-    char fn[] = "result.txt";
+    char fn[] = "result.dat";
     cout << "This casino has two games that you will be able to bet and play"
             << endl;
-    int *result = new int[casino.wins+3];
+    casino.result = new int[casino.wins+3];
     string again = "again";
     do
     {
@@ -43,14 +43,14 @@ int main(int argc, char** argv) {
             cin >> game;
             switch(game)
             {
-                case 1: craps(casino, result); 
-                cout << "If you want to continue playing any of these two games "
-                    << "type again and then enter ";
+                case 1: craps(casino, casino.result); 
+                cout << "If you want to continue playing any of these two games"
+                    << " type again and then enter ";
                 cin >> again;
                 break;
-                case 2: blckjck(deck, casino, result);
-                cout << "If you want to continue playing any of these two games "
-                    << "type again and then enter ";
+                case 2: blckjck(deck, casino, casino.result);
+                cout << "If you want to continue playing any of these two games"
+                    << " type again and then enter ";
                 cin >> again;
                 break;
                 default: cout << "Invalid input, please input again " << endl;
@@ -65,13 +65,13 @@ int main(int argc, char** argv) {
         }
     }while(again == "again");
     cout << "You have " << casino.chips << " chips left " << endl;
-    result[casino.wins] = casino.games;
-    result[casino.wins+1] = casino.loses;
-    result[casino.wins+2] = casino.wins;
-    write(fn, result, casino.wins+3);
+    casino.result[casino.wins] = casino.games;
+    casino.result[casino.wins+1] = casino.loses;
+    casino.result[casino.wins+2] = casino.wins;
+    write(fn, casino.result, casino.wins+3);
     output();
-    read(fn, result, casino.wins+3);
-    delete []result;
+    read(fn, casino.result, casino.wins+3);
+    delete []casino.result;
     return 0;
 }
 
@@ -207,16 +207,15 @@ void blckjck(Card deck[], Casino &casino, int *result)
     string answer;
     string play;
     int betb, numHnd, numHnd2, sumHnd, sumHnd2;
-    int betc;
     do
     {
-        cin >> betc;
-        if(betc > casino.chips)
+        cin >> betb;
+        if(betb > casino.chips)
         {
             cout << "Sorry, you can't bet more than what you have, please"
                     " enter another bet " << endl;
         }
-    }while(betc > casino.chips);
+    }while(betb > casino.chips);
     shuffle(deck);
     cout << "The cards have been shuffled and now will be dealt... " << endl;
     cout << "Your cards are " << endl;
@@ -227,8 +226,8 @@ void blckjck(Card deck[], Casino &casino, int *result)
     cout << "and a face down card " << endl;
     if(deck[0].value == 1)deck[0].value  = ace(deck[0].value);
     if(deck[1].value == 1)deck[1].value = ace(deck[1].value);
-    if(deck[2].value == 1)deck[1].value = dAce(deck[2].value, deck[3].value);
-    if(deck[3].value == 1)deck[1].value = dAce(deck[3].value, deck[2].value);
+    if(deck[2].value == 1)deck[2].value = dAce(deck[2].value, deck[3].value);
+    if(deck[3].value == 1)deck[3].value = dAce(deck[3].value, deck[2].value);
     if(deck[0].value + deck[1].value == 21 && deck[2].value + deck[3].value !=
             21)
     {
@@ -241,6 +240,13 @@ void blckjck(Card deck[], Casino &casino, int *result)
             == 21)
     {
         cout << "Both you and dealer have 21, its a draw " << endl;
+    }
+    else if(deck[0].value + deck[1].value != 21 && deck[2].value + deck[3].value 
+            == 21)
+    {
+        cout << "The dealer has 21, you lost " << endl;
+        casino.chips += betb;
+        casino.loses++;
     }
     else
     {
@@ -327,8 +333,9 @@ void blckjck(Card deck[], Casino &casino, int *result)
             cout << deck[2].value << " " << deck[2].face << "  ";
             cout << deck[3].value << " " << deck[3].face << " ";
             cout << "and a face down card " << endl;
-            if(deck[7].value == 1)deck[1].value = dAce(deck[7].value, 
-                    deck[2].value, deck[3].value);
+            if(deck[7].value == 1){
+                deck[7].value = dAce(deck[7].value,deck[2].value,deck[3].value);
+            }
             sumHnd2 = deck[2].value + deck[3].value + deck[7].value;
             if(sumHnd2 >= 17)
             {
@@ -498,8 +505,8 @@ int chckWin(int sumHnd, int sumHnd2)
         }
         else
         {
-            cout << "You lost! " << endl; 
-            win = 0;
+            cout << "You win! " << endl; 
+            win = 1;
         }
     }
     if(sumHnd > 21 && sumHnd2 <= 21)

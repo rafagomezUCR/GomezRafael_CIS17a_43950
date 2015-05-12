@@ -20,7 +20,7 @@ struct Casino
     int games = 0;
     int wins = 0;
     int loses = 0;
-    int *results;
+    int *result;
 };
 
 #endif	/* STRUCTURES_H */
