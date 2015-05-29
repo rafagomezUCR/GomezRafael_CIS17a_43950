@@ -2,7 +2,7 @@
  * File:   heroes.h
  * Author: Rafael Gomez
  *
- * Created on May 14, 2015, 3:06 PM
+ * Created on May 28, 2015, 8:04 AM
  */
 
 #ifndef HEROES_H
@@ -59,9 +59,9 @@ class Characters{
         void getEquipment();
 };
 
-class Rouge:public Characters{
+class Rogue:public Characters{
     public:
-        Rouge();
+        Rogue();
         void rSpecial();
 };
 
@@ -75,6 +75,14 @@ class Warrior:public Characters{
     public:
         Warrior();
         void wSpecial();
+};
+
+class Enemy:public Characters{
+    
+};
+
+class Boss:public Characters{
+    
 };
 #endif	/* HEROES_H */
 

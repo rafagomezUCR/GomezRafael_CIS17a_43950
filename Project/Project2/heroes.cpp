@@ -2,7 +2,7 @@
  * File:   heroes.cpp
  * Author: Rafael Gomez
  *
- * Created on May 14, 2015, 3:06 PM
+ * Created on May 28, 2015, 8:04 AM
  */
 
 #include "heroes.h"
@@ -11,6 +11,7 @@
 using namespace std;
 
 Characters::Characters(){
+    cout << "There are three characters to choose from " << endl;
     attack = 0;
     speed = 0;
     defense = 0;
@@ -89,7 +90,7 @@ void Characters::setExp(int enemyL, int youL){
     }
 }
        
-Rouge::Rouge(){
+Rogue::Rogue(){
     hp = 1000;
     speed = 120;
     defense = 80;
@@ -130,5 +131,3 @@ Warrior::Warrior(){
     exp = 0;
     gold = 0;
 }
-
-
