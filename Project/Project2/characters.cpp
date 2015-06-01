@@ -5,13 +5,12 @@
  * Created on May 28, 2015, 8:04 AM
  */
 
-#include "heroes.h"
+#include "characters.h"
 #include <iostream>
 
 using namespace std;
 
 Characters::Characters(){
-    cout << "There are three characters to choose from " << endl;
     attack = 0;
     speed = 0;
     defense = 0;
@@ -20,16 +19,16 @@ Characters::Characters(){
     sizeE = 0;
     level = 0;
     iCounter = 0;
-    eCounter = 0;
+    eCounter = 10;
     exp = 0;
     gold = 0;
-    inventory = new int[sizeI];
-    equipment = new int[sizeE];
+    inventory = new string[sizeI];
+    equipment = new string[sizeE];
     for(int i = 0; i < sizeI; i++){
-        inventory[i] = i;
+        inventory[i] = " ";
     }
     for(int i = 0; i < sizeE; i++){
-        equipment[i] = i;
+        equipment[i] = " ";
     }
 }
 
@@ -38,12 +37,12 @@ Characters::~Characters(){
     delete []equipment;
 }
 
-void Characters::setInventory(int i){
+void Characters::setInventory(string i){
     inventory[iCounter] = i;
     iCounter++;
 }
 
-void Characters::setEquipment(int e){
+void Characters::setEquipment(string e){
     equipment[eCounter] = e;
     eCounter++;
 }
@@ -131,3 +130,4 @@ Warrior::Warrior(){
     exp = 0;
     gold = 0;
 }
+

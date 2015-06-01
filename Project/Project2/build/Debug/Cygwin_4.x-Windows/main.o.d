@@ -1,5 +1,5 @@
-build/Debug/Cygwin_4.x-Windows/main.o: main.cpp heroes.h world.h
+build/Debug/Cygwin_4.x-Windows/main.o: main.cpp characters.h world.h
 
-heroes.h:
+characters.h:
 
 world.h:

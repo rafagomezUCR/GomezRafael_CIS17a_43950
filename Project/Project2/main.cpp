@@ -7,7 +7,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "heroes.h"
+#include "characters.h"
 #include "world.h"
 using namespace std;
 
@@ -19,12 +19,19 @@ int main(int argc, char** argv) {
     bool again;
     World world;
     Characters first;
-    cout << "1: Rogue " << endl;
-    cout << "2: Mage " << endl;
-    cout << "3: Warrior " << endl;
-    cout << "Enter 1 for Rogue, 2 for Mage, 3 for Warrior " << endl;
-    Rogue player;
-    world.setOption(0);
+    cin >> character;
+    if(character == 1){
+        Rogue player;
+        world.setOption(0, player);
+    }
+    else if(character == 2){
+        Mage player;
+        world.setOption(0, player);
+    }
+    else if(character == 3){
+        Warrior player;
+        world.setOption(0, player);
+    }
     cout << "Your hp went to 0, I am sorry but you have died" << endl;
     return 0;
 }
