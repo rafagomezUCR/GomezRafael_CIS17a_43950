@@ -41,9 +41,10 @@ class Shop
     private:
         int option1;
         char option;
+        string *items;
     public:
-        Shop()
-        { cout << "Welcome to the shop of the mid town " << endl; }
+        Shop();
+        ~Shop();
         void getOptions();
         void setOption(char, Characters *);
 };
@@ -104,17 +105,13 @@ class Forest
     public:
         Forest();
         Forest(char);
-        Forest(char, char);
         void getOptions();
-        void getOptions2();
         //I havent applied the to battle please do so
         void battleB(Characters *, Characters &, char);
         void battle(Characters *, char);
         void setOption(char, Characters *, char);
-        void setOption2(char, Characters *, char);
         //I havent applied these two functions so do it please
         void search(Characters *, char);
-        void search2(Characters *, char);
 };
 #endif	/* WORLD_H */
 
