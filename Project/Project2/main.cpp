@@ -15,6 +15,7 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
+    srand(time(0));
     int option, character;
     bool again;
     World world;
@@ -22,15 +23,18 @@ int main(int argc, char** argv) {
     cin >> character;
     if(character == 1){
         Rogue player;
-        world.setOption(0, player);
+        Characters *ptr=&player;
+        world.setOption(0, ptr);
     }
     else if(character == 2){
         Mage player;
-        world.setOption(0, player);
+        Characters *ptr = &player;
+        world.setOption(0, ptr);
     }
     else if(character == 3){
         Warrior player;
-        world.setOption(0, player);
+        Characters *ptr = &player;
+        world.setOption(0, ptr);
     }
     cout << "Your hp went to 0, I am sorry but you have died" << endl;
     return 0;

@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <cstdlib>
 #include "world.h"
 #include "characters.h"
 
@@ -58,6 +59,8 @@ void Shop::getOptions(){
     cout << "Enter b to go back to midtown " << endl;
 }
 
+Forest::Forest(){;}
+
 Forest::Forest(char f){
     if(f == 'd'){
         cout << "Welcome to the east forest " << endl;
@@ -97,7 +100,7 @@ World::World(){
     cout << "Enter 1 for Rogue, 2 for Mage, 3 for Warrior " << endl;
 }
 
-void World::setOption(int o, Characters &player){
+void World::setOption(int o, Characters *player){
     if(o == 0){
         MidTown mid;
         mid.getOptions();
@@ -106,7 +109,7 @@ void World::setOption(int o, Characters &player){
     }
 }
 
-void MidTown::setOption(char o, Characters &player){
+void MidTown::setOption(char o, Characters *player){
     if(o == 'd'){
         EastTown east;
         east.getOptions();
@@ -139,7 +142,7 @@ void MidTown::setOption(char o, Characters &player){
     }
 }
 
-void EastTown::setOption(char o, Characters &player){
+void EastTown::setOption(char o, Characters *player){
     char p = 'e';
     if(o == 'a'){
         MidTown mid;
@@ -155,7 +158,7 @@ void EastTown::setOption(char o, Characters &player){
     }
 }
 
-void WestTown::setOption(char o, Characters &player){
+void WestTown::setOption(char o, Characters *player){
     char p = 'w';
     if(o == 'd'){
         MidTown mid;
@@ -171,7 +174,7 @@ void WestTown::setOption(char o, Characters &player){
     }
 }
 
-void NorthTown::setOption(char o, Characters &player){
+void NorthTown::setOption(char o, Characters *player){
     char p = 'n';
     if(o == 's'){
         MidTown mid;
@@ -187,7 +190,7 @@ void NorthTown::setOption(char o, Characters &player){
     }
 }
 
-void SouthTown::setOption(char o, Characters &player){
+void SouthTown::setOption(char o, Characters *player){
     char p = 's';
     if(o == 'w'){
         MidTown mid;
@@ -203,7 +206,7 @@ void SouthTown::setOption(char o, Characters &player){
     }
 }
 
-void Shop::setOption(char o, Characters &player){
+void Shop::setOption(char o, Characters *player){
     if(o == 'b'){
         MidTown mid;
         mid.getOptions();
@@ -216,11 +219,12 @@ void Shop::setOption(char o, Characters &player){
 }
 
 void Forest::getOptions(){
+    cout << "You are in the first section of the forest " << endl;
     cout << "Here you can continue forward, search, or go back" << endl;
     cout << "Type f to continue or s to search or b to back" << endl;
-    cout << "Searching has to possible outcomes" << endl;
+    cout << "Searching has two possible outcomes" << endl;
     cout << "1: Find a monster to battle " << endl;
-    cout << "2: Find some loot" << endl;
+    cout << "2: Find and artifact that increases your stats" << endl;
 }
 
 void Forest::getOptions2(){
@@ -228,7 +232,7 @@ void Forest::getOptions2(){
     cout << "Type f to continue or s to search or b to back" << endl;
 }
 
-void Forest::setOption(char o, Characters &player, char p){
+void Forest::setOption(char o, Characters *player, char p){
     if(p == 'e'){
         if(o == 'b'){
             EastTown east;
@@ -243,7 +247,19 @@ void Forest::setOption(char o, Characters &player, char p){
             forest.setOption2(option, player, p);
         }
         else if(o == 's'){
-            
+            string again;
+            do{
+                Forest forest;
+                forest.search(player, p);
+                cout << "Do you want to search again " << endl;
+                cout << "If you do please type again, and if not then type"
+                        " anything to continue moving forward " << endl;
+                cin >> again;
+            }while(again == "again");
+            Forest forest(o, p);
+            forest.getOptions2();
+            cin >> option;
+            forest.setOption2(option, player, p);
         }
     }
     else if(p == 'w'){
@@ -260,7 +276,19 @@ void Forest::setOption(char o, Characters &player, char p){
             forest.setOption2(option, player, p);
         }
         else if(o == 's'){
-            
+            string again;
+            do{
+                Forest forest;
+                forest.search(player, p);
+                cout << "Do you want to search again " << endl;
+                cout << "If you do please type again, and if not then type"
+                        " anything to continue moving forward " << endl;
+                cin >> again;
+            }while(again == "again");
+            Forest forest(o, p);
+            forest.getOptions2();
+            cin >> option;
+            forest.setOption2(option, player, p);
         }
     }
     else if(p == 'n'){
@@ -277,7 +305,29 @@ void Forest::setOption(char o, Characters &player, char p){
             forest.setOption2(option, player, p);
         }
         else if(o == 's'){
-            
+            string again;
+            do{
+                Forest forest;
+                forest.search(player, p);
+                if(player->getHp() < 0){
+                    again = "y";
+                }
+                else{
+                    cout << "Do you want to search again " << endl;
+                    cout << "If you do please type again, and if not then type"
+                            " anything to continue moving forward " << endl;
+                    cin >> again;
+                }
+            }while(again == "again");
+            if(player->getHp() < 0){
+                int x;
+            }
+            else{
+                Forest forest(o, p);
+                forest.getOptions2();
+                cin >> option;
+                forest.setOption2(option, player, p);
+            }
         }
     }
     else if(p == 's'){
@@ -294,12 +344,24 @@ void Forest::setOption(char o, Characters &player, char p){
             forest.setOption2(option, player, p);
         }
         else if(o == 's'){
-            
+            string again;
+            do{
+                Forest forest;
+                forest.search(player, p);
+                cout << "Do you want to search again " << endl;
+                cout << "If you do please type again, and if not then type"
+                        " anything to continue moving forward " << endl;
+                cin >> again;
+            }while(again == "again");
+            Forest forest(o, p);
+            forest.getOptions2();
+            cin >> option;
+            forest.setOption2(option, player, p);
         }
     }
 }
 
-void Forest::setOption2(char o, Characters &player, char p){
+void Forest::setOption2(char o, Characters *player, char p){
     if(p == 'e'){
         if(o == 'b'){
             Forest forest('d');
@@ -362,7 +424,7 @@ void Forest::setOption2(char o, Characters &player, char p){
     }
 }
 
-void Forest::battleB(Characters &player, Characters &enemy, char p){
+void Forest::battleB(Characters *player, Characters &enemy, char p){
     if(p == 'w'){
         cout << "Welcome to the first boss battle" << endl;
     }
@@ -374,5 +436,572 @@ void Forest::battleB(Characters &player, Characters &enemy, char p){
     }
     else if(p == 'n'){
         cout << "Welcome to the final boss battle" << endl;
+    }
+}
+
+void Forest::search(Characters *player, char p){
+    srand(time(0));
+    int n = rand()%2+1;
+    if(n == 1){
+        Forest forest;
+        forest.battle(player, p);
+    }
+    if(n == 2){
+        int a = rand()%4+1;
+        if(a == 1){
+            cout << "You found an artifact that increases your hp by 5" << endl;
+            player->setHp(5);
+            player->setMaxHp(5);
+            cout << "You hp is now " << player->getHp() << endl;
+        }
+        else if(a == 2){
+            cout << "You found an artifact that increases your attack by 5 " << endl;
+            player->setAttack(5);
+            player->setMaxHp(5);
+            cout << "You attack is now " << player->getAttack() << endl;
+        }
+        else if(a == 3){
+            cout << "You found an artifact that increases your defense by 5 " << endl;
+            player->setDefense(5);
+            player->setMaxHp(5);
+            cout << "Your defense is now " << player->getDefense() << endl;
+        }
+        else if(a == 4){
+            cout << "You found an artifact that increases your speed by 5 " << endl;
+            player->setSpeed(5);
+            player->setMaxHp(5);
+            cout << "Your speed is now " << player->getSpeed() << endl;
+        }
+    }
+}
+
+void Forest::battle(Characters *player, char p){
+    srand(time(0));
+    int attack = 1;
+    int run = 2;
+    int choice;
+    if(p == 'w'){
+        int lvl = player->getLevel();
+        if(lvl > 4){
+            lvl = 4;
+        }
+        int eAttack = 90+((lvl-1)*30);
+        int eDefense = 60+((lvl-1)*30);
+        int eSpeed = 80+((lvl-1)*30);
+        int eHealth = 1000+((lvl-1)*300);
+        string go;
+        cout << "You are in battle with a minion"<< endl;
+        cout << "What do you wish to do " << endl;
+        cout << "1: Attack " << endl;
+        cout << "2: Run " << endl;
+        cout << "Running will take you back to town " << endl;
+        cout << "Enter 1 to attack and 2 to run " << endl;
+        cin >> choice;
+        if(choice == 1){
+            cout << "The enemies level you found is " << lvl << endl;
+            do{
+                cout << "His hp is " << eHealth << endl;
+                cout << "Your hp is " << player->getHp() << endl;
+                if(player->getSpeed() > eSpeed){
+                    cout << "You attacked first " << endl;
+                    if(player->getAttack() < eDefense){
+                        cout << "You did no damage " << endl;
+                        cout << "Enemy now attacks " << endl;
+                        player->setHpB(player->getDefense(), eAttack);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                    }
+                    else{
+                        eHealth = eHealth - (player->getAttack() - eDefense);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                        cout << "Enemy now attacks " << endl;
+                        player->setHpB(player->getDefense(), eAttack);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                    }
+                    cout << "Type anything to continue " << endl;
+                    cin >> go;
+                }
+                else if(player->getSpeed() < eSpeed){
+                    cout << "Enemy attacked first " << endl;
+                    player->setHpB(player->getDefense(), eAttack);
+                    if(eHealth > 0){
+                        cout << "Enemies health is " << eHealth << endl;
+                    }
+                    else if(eHealth <= 0){
+                        cout << "Enemy died " << endl;
+                    }
+                    if(player->getHp() <= 0){
+                        cout << "You have died" << endl;
+                        cout << "Your hp is 0 " << endl;
+                    }
+                    else if(player->getHp() > 0){
+                        cout << "Your hp is " << player->getHp() << endl;
+                    }
+                    if(player->getHp() > 0){
+                        cout << "You now attack " << endl;
+                        if(player->getAttack() < eDefense){
+                            cout << "You did no damage " << endl;
+                        }
+                        else{
+                            eHealth = eHealth - (player->getAttack() - eDefense);
+                            if(eHealth > 0){
+                                cout << "Enemies health is " << eHealth << endl;
+                            }
+                            else if(eHealth <= 0){
+                                cout << "Enemy died " << endl;
+                            }
+                            if(player->getHp() <= 0){
+                                cout << "You have died" << endl;
+                                cout << "Your hp is 0 " << endl;
+                            }
+                            else if(player->getHp() > 0){
+                                cout << "Your hp is " << player->getHp() << endl;
+                            }
+                        }
+                    }
+                    cout << "Type anything to continue " << endl;
+                    cin >> go;
+                }
+            }while(eHealth > 0 && player->getHp() > 0);
+            cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            if(eHealth <= 0){
+                player->setExp(lvl, player->getLevel());
+            }
+        }
+        else if(choice == 2){
+            Forest forest;
+            cout << player->getCharacter() << endl;
+            forest.getOptions();
+            cin >> option;
+            forest.setOption(option, player, p);
+        }
+    }
+    else if(p == 's'){
+        int lvl = player->getLevel();
+        if(lvl < 4){
+            lvl = rand()%3+4;
+        }
+        int eAttack = 90+((lvl-1)*30);
+        int eDefense = 60+((lvl-1)*30);
+        int eSpeed = 80+((lvl-1)*30);
+        int eHealth = 1000+((lvl-1)*300);
+        string go;
+        cout << "You are in battle with a minion"<< endl;
+        cout << "What do you wish to do " << endl;
+        cout << "1: Attack " << endl;
+        cout << "2: Run " << endl;
+        cout << "Running will take you back to town " << endl;
+        cout << "Enter 1 to attack and 2 to run " << endl;
+        cin >> choice;
+        if(choice == 1){
+            cout << "The enemies level you found is " << lvl << endl;
+            do{
+                cout << "His hp is " << eHealth << endl;
+                cout << "Your hp is " << player->getHp() << endl;
+                if(player->getSpeed() > eSpeed){
+                    cout << "You attacked first " << endl;
+                    if(player->getAttack() < eDefense){
+                        cout << "You did no damage " << endl;
+                        cout << "Enemy now attacks " << endl;
+                        player->setHpB(player->getDefense(), eAttack);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                    }
+                    else{
+                        eHealth = eHealth - (player->getAttack() - eDefense);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                        cout << "Enemy now attacks " << endl;
+                        player->setHpB(player->getDefense(), eAttack);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                    }
+                    cout << "Type anything to continue " << endl;
+                    cin >> go;
+                }
+                else if(player->getSpeed() < eSpeed){
+                    cout << "Enemy attacked first " << endl;
+                    player->setHpB(player->getDefense(), eAttack);
+                    if(eHealth > 0){
+                        cout << "Enemies health is " << eHealth << endl;
+                    }
+                    else if(eHealth <= 0){
+                        cout << "Enemy died " << endl;
+                    }
+                    if(player->getHp() <= 0){
+                        cout << "You have died" << endl;
+                        cout << "Your hp is 0 " << endl;
+                    }
+                    else if(player->getHp() > 0){
+                        cout << "Your hp is " << player->getHp() << endl;
+                    }
+                    if(player->getHp() > 0){
+                        cout << "You now attack " << endl;
+                        if(player->getAttack() < eDefense){
+                            cout << "You did no damage " << endl;
+                        }
+                        else{
+                            eHealth = eHealth - (player->getAttack() - eDefense);
+                            if(eHealth > 0){
+                                cout << "Enemies health is " << eHealth << endl;
+                            }
+                            else if(eHealth <= 0){
+                                cout << "Enemy died " << endl;
+                            }
+                            if(player->getHp() <= 0){
+                                cout << "You have died" << endl;
+                                cout << "Your hp is 0 " << endl;
+                            }
+                            else if(player->getHp() > 0){
+                                cout << "Your hp is " << player->getHp() << endl;
+                            }
+                        }
+                    }
+                    cout << "Type anything to continue " << endl;
+                    cin >> go;
+                }
+            }while(eHealth > 0 && player->getHp() > 0);
+            cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            if(eHealth <= 0){
+                player->setExp(lvl, player->getLevel());
+            }
+        }
+        else if(choice == 2){
+            Forest forest;
+            cout << player->getCharacter() << endl;
+            forest.getOptions();
+            cin >> option;
+            forest.setOption(option, player, p);
+        }
+    }
+    else if(p == 'e'){
+        int lvl = player->getLevel();
+        if(lvl < 4){
+            lvl = rand()%3+7;
+        }
+        int eAttack = 90+((lvl-1)*30);
+        int eDefense = 60+((lvl-1)*30);
+        int eSpeed = 80+((lvl-1)*30);
+        int eHealth = 1000+((lvl-1)*300);
+        string go;
+        cout << "You are in battle with a minion"<< endl;
+        cout << "What do you wish to do " << endl;
+        cout << "1: Attack " << endl;
+        cout << "2: Run " << endl;
+        cout << "Running will take you back to town " << endl;
+        cout << "Enter 1 to attack and 2 to run " << endl;
+        cin >> choice;
+        if(choice == 1){
+            cout << "The enemies level you found is " << lvl << endl;
+            do{
+                cout << "His hp is " << eHealth << endl;
+                cout << "Your hp is " << player->getHp() << endl;
+                if(player->getSpeed() > eSpeed){
+                    cout << "You attacked first " << endl;
+                    if(player->getAttack() < eDefense){
+                        cout << "You did no damage " << endl;
+                        cout << "Enemy now attacks " << endl;
+                        player->setHpB(player->getDefense(), eAttack);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                    }
+                    else{
+                        eHealth = eHealth - (player->getAttack() - eDefense);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                        cout << "Enemy now attacks " << endl;
+                        player->setHpB(player->getDefense(), eAttack);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                    }
+                    cout << "Type anything to continue " << endl;
+                    cin >> go;
+                }
+                else if(player->getSpeed() < eSpeed){
+                    cout << "Enemy attacked first " << endl;
+                    player->setHpB(player->getDefense(), eAttack);
+                    if(eHealth > 0){
+                        cout << "Enemies health is " << eHealth << endl;
+                    }
+                    else if(eHealth <= 0){
+                        cout << "Enemy died " << endl;
+                    }
+                    if(player->getHp() <= 0){
+                        cout << "You have died" << endl;
+                        cout << "Your hp is 0 " << endl;
+                    }
+                    else if(player->getHp() > 0){
+                        cout << "Your hp is " << player->getHp() << endl;
+                    }
+                    if(player->getHp() > 0){
+                        cout << "You now attack " << endl;
+                        if(player->getAttack() < eDefense){
+                            cout << "You did no damage " << endl;
+                        }
+                        else{
+                            eHealth = eHealth - (player->getAttack() - eDefense);
+                            if(eHealth > 0){
+                                cout << "Enemies health is " << eHealth << endl;
+                            }
+                            else if(eHealth <= 0){
+                                cout << "Enemy died " << endl;
+                            }
+                            if(player->getHp() <= 0){
+                                cout << "You have died" << endl;
+                                cout << "Your hp is 0 " << endl;
+                            }
+                            else if(player->getHp() > 0){
+                                cout << "Your hp is " << player->getHp() << endl;
+                            }
+                        }
+                    }
+                    cout << "Type anything to continue " << endl;
+                    cin >> go;
+                }
+            }while(eHealth > 0 && player->getHp() > 0);
+            cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            if(eHealth <= 0){
+                player->setExp(lvl, player->getLevel());
+            }
+        }
+        else if(choice == 2){
+            Forest forest;
+            cout << player->getCharacter() << endl;
+            forest.getOptions();
+            cin >> option;
+            forest.setOption(option, player, p);
+        }
+    }
+    else if(p == 'n'){
+        int lvl = player->getLevel();
+        if(lvl < 4){
+            lvl = rand()%3+10;
+        }
+        int eAttack = 90+((lvl-1)*30);
+        int eDefense = 60+((lvl-1)*30);
+        int eSpeed = 80+((lvl-1)*30);
+        int eHealth = 1000+((lvl-1)*300);
+        string go;
+        cout << "You are in battle with a minion"<< endl;
+        cout << "What do you wish to do " << endl;
+        cout << "1: Attack " << endl;
+        cout << "2: Run " << endl;
+        cout << "Running will take you back to town " << endl;
+        cout << "Enter 1 to attack and 2 to run " << endl;
+        cin >> choice;
+        if(choice == 1){
+            cout << "The enemies level you found is " << lvl << endl;
+            do{
+                cout << "His hp is " << eHealth << endl;
+                cout << "Your hp is " << player->getHp() << endl;
+                if(player->getSpeed() > eSpeed){
+                    cout << "You attacked first " << endl;
+                    if(player->getAttack() < eDefense){
+                        cout << "You did no damage " << endl;
+                        cout << "Enemy now attacks " << endl;
+                        player->setHpB(player->getDefense(), eAttack);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                    }
+                    else{
+                        eHealth = eHealth - (player->getAttack() - eDefense);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                        cout << "Enemy now attacks " << endl;
+                        player->setHpB(player->getDefense(), eAttack);
+                        if(eHealth > 0){
+                            cout << "Enemies health is " << eHealth << endl;
+                        }
+                        else if(eHealth <= 0){
+                            cout << "Enemy died " << endl;
+                        }
+                        if(player->getHp() <= 0){
+                            cout << "You have died" << endl;
+                            cout << "Your hp is 0 " << endl;
+                        }
+                        else if(player->getHp() > 0){
+                            cout << "Your hp is " << player->getHp() << endl;
+                        }
+                    }
+                    cout << "Type anything to continue " << endl;
+                    cin >> go;
+                }
+                else if(player->getSpeed() < eSpeed){
+                    cout << "Enemy attacked first " << endl;
+                    player->setHpB(player->getDefense(), eAttack);
+                    if(eHealth > 0){
+                        cout << "Enemies health is " << eHealth << endl;
+                    }
+                    else if(eHealth <= 0){
+                        cout << "Enemy died " << endl;
+                    }
+                    if(player->getHp() <= 0){
+                        cout << "You have died" << endl;
+                        cout << "Your hp is 0 " << endl;
+                    }
+                    else if(player->getHp() > 0){
+                        cout << "Your hp is " << player->getHp() << endl;
+                    }
+                    if(player->getHp() > 0){
+                        cout << "You now attack " << endl;
+                        if(player->getAttack() < eDefense){
+                            cout << "You did no damage " << endl;
+                        }
+                        else{
+                            eHealth = eHealth - (player->getAttack() - eDefense);
+                            if(eHealth > 0){
+                                cout << "Enemies health is " << eHealth << endl;
+                            }
+                            else if(eHealth <= 0){
+                                cout << "Enemy died " << endl;
+                            }
+                            if(player->getHp() <= 0){
+                                cout << "You have died" << endl;
+                                cout << "Your hp is 0 " << endl;
+                            }
+                            else if(player->getHp() > 0){
+                                cout << "Your hp is " << player->getHp() << endl;
+                            }
+                        }
+                    }
+                    cout << "Type anything to continue " << endl;
+                    cin >> go;
+                }
+            }while(eHealth > 0 && player->getHp() > 0);
+            cout << "Your health at the end of the battle is 0" << endl;
+            if(eHealth <= 0){
+                player->setExp(lvl, player->getLevel());
+            }
+        }
+        else if(choice == 2){
+            Forest forest;
+            cout << player->getCharacter() << endl;
+            forest.getOptions();
+            cin >> option;
+            forest.setOption(option, player, p);
+        }
     }
 }

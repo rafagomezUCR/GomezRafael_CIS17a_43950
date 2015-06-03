@@ -17,6 +17,7 @@ class Characters{
         int sizeI;
         int sizeE;
         int hp;
+        int maxhp;
         int attack;
         int speed;
         int defense;
@@ -27,6 +28,7 @@ class Characters{
         int eCounter;
         int exp;
         int gold;
+        string character;
     public:
         Characters();
         ~Characters();
@@ -37,6 +39,9 @@ class Characters{
         void setExp(int, int);
         void setHp(int h)
         { hp += h; }
+        void setMaxHp(int h)
+        { maxhp += h; }
+        void setHpB(int, int);
         void setAttack(int a)
         { attack += a; }
         void setSpeed(int s)
@@ -61,29 +66,30 @@ class Characters{
         void setEquipment(string);
         void getInventory();
         void getEquipment();
+        void Special(){;}
+        string getCharacter()
+        { return character; }
 };
 
 class Rogue:public Characters{
     public:
         Rogue();
-        void rSpecial();
+        void Special();     
 };
 
 class Mage:public Characters{
     public:
         Mage();
-        void mSpecial();
+        void Special();
 };
 
 class Warrior:public Characters{
     public:
         Warrior();
-        void wSpecial();
+        void Special();
 };
 
-class Enemy:public Characters{
-    
-};
+
 
 class Boss:public Characters{
     private:

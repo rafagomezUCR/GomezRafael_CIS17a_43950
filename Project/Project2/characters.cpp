@@ -88,8 +88,20 @@ void Characters::setExp(int enemyL, int youL){
         exp = 0;
     }
 }
+
+void Characters::setHpB(int playerDf, int eAttk){
+    int x;
+    x = hp - (eAttk - playerDf);
+    if(x > hp){
+        hp += 0;
+    }
+    else{
+        hp = x;
+    }
+}
        
 Rogue::Rogue(){
+    maxhp = 1000;
     hp = 1000;
     speed = 120;
     defense = 80;
@@ -101,9 +113,11 @@ Rogue::Rogue(){
     eCounter = 0;
     exp = 0;
     gold = 0;
+    character="Rogue";
 }
 
 Mage::Mage(){
+    maxhp = 1000;
     hp = 1000;
     speed = 100;
     defense = 60;
@@ -115,9 +129,11 @@ Mage::Mage(){
     eCounter = 0;
     exp = 0;
     gold = 0;
+    character = "Mage";
 }
 
 Warrior::Warrior(){
+    maxhp = 2000;
     hp = 2000;
     speed = 80;
     defense = 100;
@@ -129,5 +145,5 @@ Warrior::Warrior(){
     eCounter = 0;
     exp = 0;
     gold = 0;
+    character = "Warrior";
 }
-
