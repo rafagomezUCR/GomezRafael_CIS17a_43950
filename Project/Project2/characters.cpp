@@ -103,13 +103,13 @@ void Characters::setHpB(int playerDf, int eAttk){
         hp = x;
     }
 }
-       
+ /////asdfasdflasdjfasdflkasjdfhlkasjdhflkasdhfalksdfkla      
 Rogue::Rogue(){
     maxhp = 1000;
     hp = 1000;
     speed = 120;
-    defense = 10000;//80;
-    attack = 50000;//90;
+    defense = 80;
+    attack = 90;
     sizeI = 30;
     sizeE = 5;
     level = 1;
