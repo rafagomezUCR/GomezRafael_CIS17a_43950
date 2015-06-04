@@ -16,7 +16,6 @@ using namespace std;
 class World
 {
     private:
-        int option1;
         char option;
     public:
         World();
@@ -26,7 +25,6 @@ class World
 class MidTown
 {
     private:
-        int option1;
         char option;
     public:
         MidTown()
@@ -39,9 +37,8 @@ class MidTown
 class Shop
 {
     private:
-        int option1;
         char option;
-        string *items;
+        int *items;
     public:
         Shop();
         ~Shop();
@@ -52,7 +49,6 @@ class Shop
 class EastTown
 {
     private:
-        int option1;
         char option;
     public:
         EastTown()
@@ -64,7 +60,6 @@ class EastTown
 class WestTown
 {
     private:
-        int option1;
         char option;
     public:
         WestTown()
@@ -76,7 +71,6 @@ class WestTown
 class NorthTown
 {
     private:
-        int option1;
         char option;
     public:
         NorthTown()
@@ -88,7 +82,6 @@ class NorthTown
 class SouthTown
 {
     private:
-        int option1;
         char option;
     public:
         SouthTown()
@@ -100,17 +93,15 @@ class SouthTown
 class Forest
 {
     private:
-        int option1;
         char option;
     public:
         Forest();
         Forest(char);
         void getOptions();
-        //I havent applied the to battle please do so
         void battleB(Characters *, Characters &, char);
         void battle(Characters *, char);
+        int battleR(Characters *, int, int, int, int, int);
         void setOption(char, Characters *, char);
-        //I havent applied these two functions so do it please
         void search(Characters *, char);
 };
 #endif	/* WORLD_H */

@@ -109,7 +109,7 @@ Rogue::Rogue(){
     hp = 1000;
     speed = 120;
     defense = 80;
-    attack = 90;
+    attack = 500000;//90;
     sizeI = 30;
     sizeE = 5;
     level = 1;

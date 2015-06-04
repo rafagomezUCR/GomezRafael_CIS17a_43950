@@ -37,6 +37,8 @@ class Characters{
         void setLevel()
         { level++; }
         void setExp(int, int);
+        void setHp2(int h)
+        { hp = h; }
         void setHp(int h)
         { hp += h; }
         void setMaxHp(int h)
