@@ -65,7 +65,7 @@ void Characters::setExp(int enemyL, int youL){
         exp += 10;
     }
     if(remain > 0){
-        exp = remain * 10;
+        exp += (remain * 10);
     }
     if(remain < 0){
         remain *= -1;
@@ -82,8 +82,12 @@ void Characters::setExp(int enemyL, int youL){
             exp += 0;
         }
     }
-    if(exp == 100 && level < 13){
+    if(exp >= 100 && level < 13){
+        cout << endl;
+        cout << "***************" << endl;
         cout << "You leveled up! " << endl;
+        cout << "***************" << endl;
+        cout << endl;
         setLevel();
         exp = 0;
     }
@@ -104,8 +108,8 @@ Rogue::Rogue(){
     maxhp = 1000;
     hp = 1000;
     speed = 120;
-    defense = 80;
-    attack = 90;
+    defense = 10000;//80;
+    attack = 50000;//90;
     sizeI = 30;
     sizeE = 5;
     level = 1;
@@ -138,6 +142,22 @@ Warrior::Warrior(){
     speed = 80;
     defense = 100;
     attack = 120;
+    sizeI = 30;
+    sizeE = 5;
+    level = 1;
+    iCounter = 0;
+    eCounter = 0;
+    exp = 0;
+    gold = 0;
+    character = "Warrior";
+}
+
+Boss1::Boss1(){
+    maxhp = 2000;
+    hp = 2000;
+    speed = 80;
+    defense = 100;
+    attack = 20000;
     sizeI = 30;
     sizeE = 5;
     level = 1;

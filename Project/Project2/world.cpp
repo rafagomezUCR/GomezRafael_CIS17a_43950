@@ -221,6 +221,7 @@ void Forest::getOptions(){
 }
 
 void Forest::setOption(char o, Characters *player, char p){
+    char choice;
     if(p == 'e'){
         if(o == 'b'){
             EastTown east;
@@ -230,7 +231,7 @@ void Forest::setOption(char o, Characters *player, char p){
         }
         else if(o == 'f'){
             Forest forest;
-            Boss boss;
+            Boss1 boss;
             forest.battleB(player, boss, p);
         }
         else if(o == 's'){
@@ -238,14 +239,35 @@ void Forest::setOption(char o, Characters *player, char p){
             do{
                 Forest forest;
                 forest.search(player, p);
-                cout << "Do you want to search again " << endl;
-                cout << "If you do please type again, and if not then type"
-                        " anything to continue moving forward " << endl;
-                cin >> again;
+                if(player->getHp() <= 0){
+                    again = "y";
+                }
+                else{
+                    cout << "Do you want to search again " << endl;
+                    cout << "If you do please type again, and if not then type"
+                            " anything for further options " << endl;
+                    cin >> again;
+                }
             }while(again == "again");
-            Forest forest;
-            Boss boss;
-            forest.battleB(player, boss, p);
+            if(player->getHp() >0){
+                cout << "Do you wish to continue forward or go back to town " << endl;
+                cout << "Type f for forward or b for back " << endl;
+                cin >> choice;
+                if(choice == 'f'){
+                    Forest forest;
+                    Boss1 boss;
+                    forest.battleB(player, boss, p);
+                }
+                else if(choice == 'b'){
+                    EastTown east;
+                    east.getOptions();
+                    cin >> option;
+                    east.setOption(option, player);
+                }
+            }
+            else{
+                int t;
+            }
         }
     }
     else if(p == 'w'){
@@ -257,7 +279,7 @@ void Forest::setOption(char o, Characters *player, char p){
         }
         else if(o == 'f'){
             Forest forest;
-            Boss boss;
+            Boss1 boss;
             forest.battleB(player, boss, p);
         }
         else if(o == 's'){
@@ -265,14 +287,35 @@ void Forest::setOption(char o, Characters *player, char p){
             do{
                 Forest forest;
                 forest.search(player, p);
-                cout << "Do you want to search again " << endl;
-                cout << "If you do please type again, and if not then type"
-                        " anything to continue moving forward " << endl;
-                cin >> again;
+                if(player->getHp() <= 0){
+                    again = "y";
+                }
+                else{
+                    cout << "Do you want to search again " << endl;
+                    cout << "If you do please type again, and if not then type"
+                        " anything for further options " << endl;
+                    cin >> again;
+                }
             }while(again == "again");
-            Forest forest;
-            Boss boss;
-            forest.battleB(player, boss, p);
+            if(player->getHp() > 0){
+                cout << "Do you wish to continue forward or go back to town " << endl;
+                cout << "Type f for forward or b for back " << endl;
+                cin >> choice;
+                if(choice == 'f'){
+                    Forest forest;
+                    Boss1 boss;
+                    forest.battleB(player, boss, p);
+                }
+                else if(choice == 'b'){
+                    WestTown west;
+                    west.getOptions();
+                    cin >> option;
+                    west.setOption(option, player);
+                }
+            }
+            else{
+                int x;
+            }
         }
     }
     else if(p == 'n'){
@@ -284,7 +327,7 @@ void Forest::setOption(char o, Characters *player, char p){
         }
         else if(o == 'f'){
             Forest forest;
-            Boss boss;
+            Boss1 boss;
             forest.battleB(player, boss, p);
         }
         else if(o == 's'){
@@ -298,17 +341,28 @@ void Forest::setOption(char o, Characters *player, char p){
                 else{
                     cout << "Do you want to search again " << endl;
                     cout << "If you do please type again, and if not then type"
-                            " anything to continue moving forward " << endl;
+                        " anything for further options " << endl;
                     cin >> again;
                 }
             }while(again == "again");
-            if(player->getHp() < 0){
-                int x;
+            if(player->getHp() > 0){
+                cout << "Do you wish to continue forward or go back to town " << endl;
+                cout << "Type f for forward or b for back " << endl;
+                cin >> choice;
+                if(choice == 'f'){
+                    Forest forest;
+                    Boss1 boss;
+                    forest.battleB(player, boss, p);
+                }
+                else if(choice == 'b'){
+                    NorthTown north;
+                    north.getOptions();
+                    cin >> option;
+                    north.setOption(option, player);
+                }
             }
             else{
-                Forest forest;
-            Boss boss;
-            forest.battleB(player, boss, p);
+                int x;
             }
         }
     }
@@ -321,7 +375,7 @@ void Forest::setOption(char o, Characters *player, char p){
         }
         else if(o == 'f'){
             Forest forest;
-            Boss boss;
+            Boss1 boss;
             forest.battleB(player, boss, p);
         }
         else if(o == 's'){
@@ -329,14 +383,35 @@ void Forest::setOption(char o, Characters *player, char p){
             do{
                 Forest forest;
                 forest.search(player, p);
-                cout << "Do you want to search again " << endl;
-                cout << "If you do please type again, and if not then type"
-                        " anything to continue moving forward " << endl;
-                cin >> again;
+                if(player->getHp() < 0){
+                    again = "y";
+                }
+                else{
+                    cout << "Do you want to search again " << endl;
+                    cout << "If you do please type again, and if not then type"
+                        " anything for further options " << endl;
+                    cin >> again;
+                }
             }while(again == "again");
-            Forest forest;
-            Boss boss;
-            forest.battleB(player, boss, p);
+            if(player->getHp() > 0){
+                cout << "Do you wish to continue forward or go back to town " << endl;
+                cout << "Type f for forward or b for back " << endl;
+                cin >> choice;
+                if(choice == 'f'){
+                    Forest forest;
+                    Boss1 boss;
+                    forest.battleB(player, boss, p);
+                }
+                else if(choice == 'b'){
+                    SouthTown south;
+                    south.getOptions();
+                    cin >> option;
+                    south.setOption(option, player);
+                }
+            }
+            else{
+                int x;
+            }
         }
     }
 }
@@ -374,19 +449,16 @@ void Forest::search(Characters *player, char p){
         else if(a == 2){
             cout << "You found an artifact that increases your attack by 5 " << endl;
             player->setAttack(5);
-            player->setMaxHp(5);
             cout << "You attack is now " << player->getAttack() << endl;
         }
         else if(a == 3){
             cout << "You found an artifact that increases your defense by 5 " << endl;
             player->setDefense(5);
-            player->setMaxHp(5);
             cout << "Your defense is now " << player->getDefense() << endl;
         }
         else if(a == 4){
             cout << "You found an artifact that increases your speed by 5 " << endl;
             player->setSpeed(5);
-            player->setMaxHp(5);
             cout << "Your speed is now " << player->getSpeed() << endl;
         }
     }
@@ -394,8 +466,6 @@ void Forest::search(Characters *player, char p){
 
 void Forest::battle(Characters *player, char p){
     srand(time(0));
-    int attack = 1;
-    int run = 2;
     int choice;
     if(p == 'w'){
         int lvl = player->getLevel();
@@ -409,10 +479,10 @@ void Forest::battle(Characters *player, char p){
         string go;
         cout << "You are in battle with a minion"<< endl;
         cout << "What do you wish to do " << endl;
-        cout << "1: Attack " << endl;
+        cout << "1: Battle " << endl;
         cout << "2: Run " << endl;
         cout << "Running will return you to the forest " << endl;
-        cout << "Enter 1 to attack and 2 to run " << endl;
+        cout << "Enter 1 to battle and 2 to run " << endl;
         cin >> choice;
         if(choice == 1){
             cout << "The enemies level you found is " << lvl << endl;
@@ -517,14 +587,17 @@ void Forest::battle(Characters *player, char p){
                     cin >> go;
                 }
             }while(eHealth > 0 && player->getHp() > 0);
-            cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            if(player->getHp() > 0){
+                cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            }
             if(eHealth <= 0){
                 player->setExp(lvl, player->getLevel());
+                int g = rand()%10+11;
+                player->setGold(g);
             }
         }
         else if(choice == 2){
             Forest forest;
-            cout << player->getCharacter() << endl;
             forest.getOptions();
             cin >> option;
             forest.setOption(option, player, p);
@@ -542,10 +615,10 @@ void Forest::battle(Characters *player, char p){
         string go;
         cout << "You are in battle with a minion"<< endl;
         cout << "What do you wish to do " << endl;
-        cout << "1: Attack " << endl;
+        cout << "1: Battle " << endl;
         cout << "2: Run " << endl;
         cout << "Running will return you to the forest " << endl;
-        cout << "Enter 1 to attack and 2 to run " << endl;
+        cout << "Enter 1 to battle and 2 to run " << endl;
         cin >> choice;
         if(choice == 1){
             cout << "The enemies level you found is " << lvl << endl;
@@ -650,14 +723,17 @@ void Forest::battle(Characters *player, char p){
                     cin >> go;
                 }
             }while(eHealth > 0 && player->getHp() > 0);
-            cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            if(player->getHp() > 0){
+                cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            }
             if(eHealth <= 0){
                 player->setExp(lvl, player->getLevel());
+                int g = rand()%50+51;
+                player->setGold(g);
             }
         }
         else if(choice == 2){
             Forest forest;
-            cout << player->getCharacter() << endl;
             forest.getOptions();
             cin >> option;
             forest.setOption(option, player, p);
@@ -675,10 +751,10 @@ void Forest::battle(Characters *player, char p){
         string go;
         cout << "You are in battle with a minion"<< endl;
         cout << "What do you wish to do " << endl;
-        cout << "1: Attack " << endl;
+        cout << "1: Battle " << endl;
         cout << "2: Run " << endl;
         cout << "Running will return you to the forest " << endl;
-        cout << "Enter 1 to attack and 2 to run " << endl;
+        cout << "Enter 1 to battle and 2 to run " << endl;
         cin >> choice;
         if(choice == 1){
             cout << "The enemies level you found is " << lvl << endl;
@@ -783,9 +859,13 @@ void Forest::battle(Characters *player, char p){
                     cin >> go;
                 }
             }while(eHealth > 0 && player->getHp() > 0);
-            cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            if(player->getHp() > 0){
+                cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            }
             if(eHealth <= 0){
                 player->setExp(lvl, player->getLevel());
+                int g = rand()%100+101;
+                player->setGold(g);
             }
         }
         else if(choice == 2){
@@ -808,10 +888,10 @@ void Forest::battle(Characters *player, char p){
         string go;
         cout << "You are in battle with a minion"<< endl;
         cout << "What do you wish to do " << endl;
-        cout << "1: Attack " << endl;
+        cout << "1: Battle " << endl;
         cout << "2: Run " << endl;
         cout << "Running will return you to the forest " << endl;
-        cout << "Enter 1 to attack and 2 to run " << endl;
+        cout << "Enter 1 to battle and 2 to run " << endl;
         cin >> choice;
         if(choice == 1){
             cout << "The enemies level you found is " << lvl << endl;
@@ -916,9 +996,13 @@ void Forest::battle(Characters *player, char p){
                     cin >> go;
                 }
             }while(eHealth > 0 && player->getHp() > 0);
-            cout << "Your health at the end of the battle is 0" << endl;
+            if(player->getHp() > 0){
+                cout << "Your health at the end of the battle is " << player->getHp() << endl;
+            }
             if(eHealth <= 0){
                 player->setExp(lvl, player->getLevel());
+                int g = rand()%300+201;
+                player->setGold(g);
             }
         }
         else if(choice == 2){
