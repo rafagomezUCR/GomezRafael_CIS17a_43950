@@ -46,7 +46,8 @@ void WestTown::getOptions(){
     cout << "You can: " << endl;
     cout << "Go to mid Town " << endl;
     cout << "Go west to forest " << endl;
-    cout << "Enter d to go mid town, a for west forest " << endl;
+    cout << "Go to the inn to heal " << endl;
+    cout << "Enter d to go mid town, a for west forest, and i for inn " << endl;
 }
 
 void NorthTown::getOptions(){
@@ -186,6 +187,42 @@ void WestTown::setOption(char o, Characters *player){
         forest.getOptions();
         cin >> option;
         forest.setOption(option, player, p);
+    }
+    else if(o == 'i'){
+        WestTown west(o);
+        west.inn(player);
+    }
+}
+
+void WestTown::inn(Characters *player){
+    char yes;
+    cout << "here you can restore you health by only paying"
+            " 10 gold " << endl;
+    cout << "Do you wish to pay the 10 gold " << endl;
+    cout << "Enter y for yes or enter anything for no " << endl;
+    cin >> yes;
+    if(yes == 'y'){
+        if(player->getGold() < 10){
+            cout << "I am sorry but u don't have enough gold " << endl;
+        }
+        else{
+            cout << "Current hp " << player->getHp() << endl;
+            cout << "Max hp " << player->getMaxHp() << endl;
+            int temp = player->getMaxHp();
+            player->setHp2(temp);
+            cout << "hp after " << player->getHp() << endl;
+            cout << "Max hp after " << player->getMaxHp() << endl;
+        }
+        WestTown west;
+        west.getOptions();
+        cin >> option;
+        west.setOption(option, player);
+    }
+    else{
+        WestTown west;
+        west.getOptions();
+        cin >> option;
+        west.setOption(option, player);
     }
 }
 
@@ -641,7 +678,7 @@ int Forest::battleR(Characters *player, int eHealth, int eAttack, int eDefense, 
                 }
             }
             else{
-                eHealth = eHealth - (player->getAttack() - eDefense);
+                eHealth = eHealth - ((player->getAttack() - eDefense)*4);
                 if(eHealth > 0){
                     cout << "Enemies health is " << eHealth << endl;
                 }
@@ -698,7 +735,7 @@ int Forest::battleR(Characters *player, int eHealth, int eAttack, int eDefense, 
                     cout << "You did no damage " << endl;
                 }
                 else{
-                    eHealth = eHealth - (player->getAttack() - eDefense);
+                    eHealth = eHealth - ((player->getAttack() - eDefense)*4);
                     if(eHealth > 0){
                         cout << "Enemies health is " << eHealth << endl;
                     }

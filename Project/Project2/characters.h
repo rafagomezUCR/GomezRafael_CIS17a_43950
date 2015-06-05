@@ -64,37 +64,37 @@ class Characters{
         { return exp; }
         int getGold() const
         { return gold; }
+        int getMaxHp() const
+        { return maxhp; }
         void setInventory(string);
         void setEquipment(string);
         void getInventory();
         void getEquipment();
-        void Special(){;}
-        string getCharacter()
-        { return character; }
+        virtual string getCharacter() const = 0;
 };
 
 class Rogue:public Characters{
     public:
         Rogue();
-        void Special();     
+        virtual string getCharacter() const;
 };
 
 class Mage:public Characters{
     public:
         Mage();
-        void Special();
+        virtual string getCharacter() const;
 };
 
 class Warrior:public Characters{
     public:
         Warrior();
-        void Special();
+        virtual string getCharacter() const;
 };
 
 class Boss1:public Characters{
     public:
         Boss1();
-        void hello();
+        virtual string getCharacter() const;
 };
 
 class Boss2:public Characters{

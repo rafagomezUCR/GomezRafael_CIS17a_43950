@@ -64,6 +64,9 @@ class WestTown
     public:
         WestTown()
         { cout << "Welcome to the west part of the town " << endl; }
+        WestTown(char i)
+        { cout << "Welcome to the inn " << endl; }
+        void inn(Characters *);
         void getOptions();
         void setOption(char, Characters *);
 };

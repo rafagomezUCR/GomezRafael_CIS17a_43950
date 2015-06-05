@@ -95,7 +95,7 @@ void Characters::setExp(int enemyL, int youL){
 
 void Characters::setHpB(int playerDf, int eAttk){
     int x;
-    x = hp - (eAttk - playerDf);
+    x = hp - ((eAttk - playerDf)*2);
     if(x > hp){
         hp += 0;
     }
@@ -103,13 +103,13 @@ void Characters::setHpB(int playerDf, int eAttk){
         hp = x;
     }
 }
- /////asdfasdflasdjfasdflkasjdfhlkasjdhflkasdhfalksdfkla      
+     
 Rogue::Rogue(){
     maxhp = 1000;
     hp = 1000;
     speed = 120;
     defense = 80;
-    attack = 500000;//90;
+    attack = 90;
     sizeI = 30;
     sizeE = 5;
     level = 1;
@@ -166,4 +166,20 @@ Boss1::Boss1(){
     exp = 0;
     gold = 0;
     character = "Warrior";
+}
+
+string Rogue::getCharacter() const{
+    { return character; }
+}
+
+string Mage::getCharacter() const{
+    { return character; }
+}
+
+string Warrior::getCharacter() const{
+    { return character; }
+}
+
+string Boss1::getCharacter() const{
+    { return character; }
 }

@@ -20,7 +20,6 @@ int main(int argc, char** argv) {
     int option, character;
     bool again;
     World world;
-    Characters first;
     cin >> character;
     if(character == 1){
         Rogue player;
