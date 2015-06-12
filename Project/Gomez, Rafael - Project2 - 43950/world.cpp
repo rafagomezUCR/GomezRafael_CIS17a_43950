@@ -474,28 +474,66 @@ void Forest::battleB(Characters *player, Characters &enemy, char p){
         cout << "You can lower your speed by a bit to increase your attack"
                 << " greatly permanently" << endl;
     }
-    //nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
     string go;
     float damage;
     int result;
+    string wAnswer = "no";
+    string mAnswer = "no";
     do{
         cout << "His hp is " << enemy.getHp() << endl;
         cout << "Your hp is " << player->getHp() << endl;
         if(player->getSpeed() > enemy.getSpeed()){
             cout << "You attacked first " << endl;
-            damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100);
-            result = (enemy.getHp() - static_cast<int>(damage))*2;
-            enemy.setHp2(result);
+            if(player->getCharacter() == "Rogue"){
+                cout << "You attacked twice " << endl;
+                damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100)*4;
+                result = (enemy.getHp() - static_cast<int>(damage));
+                enemy.setHp2(result);
+            }
+            else if(player->getCharacter() == "Warrior"){
+                if(wAnswer != "y"){
+                    cout << "Do you wish to permanently raise you attack and lower ur speed " << endl;
+                    cout << "Enter y for yes or anything else for no " << endl;
+                    cin >> wAnswer;
+                    if(wAnswer == "y"){
+                        player->setAttack(player->getAttack()+1500);
+                        player->setSpeed(-100);
+                    }
+                }
+                damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100)*2;
+                result = (enemy.getHp() - static_cast<int>(damage));
+                enemy.setHp2(result);
+            }
+            else if(player->getCharacter() == "Mage"){
+                cout << "Do you wish to heal or attack " << endl;
+                cout << "Enter h to heal or anything else to attack" << endl;
+                cin >> mAnswer;
+                if(mAnswer == "h"){
+                    int restored = player->getHp() / 2;
+                    if(restored + player->getHp() >= player->getMaxHp()){
+                        player->setHp2(player->getMaxHp());
+                    }
+                    else{
+                        player->setHp(restored);
+                    }
+                    cout << "Your hp now is: " << player->getHp() << endl;
+                }
+                else{
+                    damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100)*2;
+                    result = (enemy.getHp() - static_cast<int>(damage));
+                    enemy.setHp2(result);
+                }
+            }
             if(enemy.getHp() <= 0){
                 cout << "Enemy has died" << endl;
             }
             else{
                 cout << "Enemies hp is: " << enemy.getHp() << endl;
+                cout << "Now the Boss attacks " << endl;
+                damage = (((((2*enemy.getLevel())+10)/250.0)*(static_cast<float>(enemy.getAttack())/player->getDefense())*90)+100)*2;
+                result = (player->getHp() - static_cast<int>(damage));
+                player->setHp2(result);
             }
-            cout << "Now the Boss attacks " << endl;
-            damage = (((((2*enemy.getLevel())+10)/250.0)*(static_cast<float>(enemy.getAttack())/player->getDefense())*90)+100);
-            result = (player->getHp() - static_cast<int>(damage))*2;
-            player->setHp2(result);
             if(player->getHp() <= 0){
                 cout << "Your hp went to 0" << endl;
             }
@@ -507,19 +545,56 @@ void Forest::battleB(Characters *player, Characters &enemy, char p){
         }
         else if(player->getSpeed() < enemy.getSpeed()){
             cout << "Enemy attacked first " << endl;
-            damage = (((((2*enemy.getLevel())+10)/250.0)*(static_cast<float>(enemy.getAttack())/player->getDefense())*90)+100);
-            result = (player->getHp() - static_cast<int>(damage))*2;
+            damage = (((((2*enemy.getLevel())+10)/250.0)*(static_cast<float>(enemy.getAttack())/player->getDefense())*90)+100)*2;
+            result = (player->getHp() - static_cast<int>(damage));
             player->setHp2(result);
             if(player->getHp() <= 0){
                 cout << "Your hp went to 0" << endl;
             }
             else{
-                cout << "Your hp is: " << enemy.getHp() << endl;
+                cout << "Your hp is: " << player->getHp() << endl;
+                cout << "Now you attack" << endl;
+                if(player->getCharacter() == "Rogue"){
+                    cout << "You attacked twice " << endl;
+                    damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100)*4;
+                    result = (enemy.getHp() - static_cast<int>(damage));
+                    enemy.setHp2(result);
+                }
+                else if(player->getCharacter() == "Warrior"){
+                    if(wAnswer != "y"){
+                        cout << "Do you wish to permanently raise you attack and lower ur speed " << endl;
+                        cout << "Enter y for yes or anything else for no " << endl;
+                        cin >> wAnswer;
+                        if(wAnswer == "y"){
+                            player->setAttack(player->getAttack()+1500);
+                            player->setSpeed(-100);
+                        }
+                    }
+                    damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100)*2;
+                    result = (enemy.getHp() - static_cast<int>(damage));
+                    enemy.setHp2(result);
+                }
+                else if(player->getCharacter() == "Mage"){
+                    cout << "Do you wish to heal or attack " << endl;
+                    cout << "Enter h to heal or anything else to attack" << endl;
+                    cin >> mAnswer;
+                    if(mAnswer == "h"){
+                        int restored = player->getHp() / 2;
+                        if(restored + player->getHp() >= player->getMaxHp()){
+                            player->setHp2(player->getMaxHp());
+                        }
+                        else{
+                            player->setHp(restored);
+                        }
+                        cout << "Your hp now is: " << player->getHp() << endl;
+                    }
+                    else{
+                        damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100)*2;
+                        result = (enemy.getHp() - static_cast<int>(damage));
+                        enemy.setHp2(result);
+                    }
+                }
             }
-            cout << "Now you attack" << endl;
-            damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100);
-            result = (enemy.getHp() - static_cast<int>(damage))*2;
-            enemy.setHp2(result);
             if(enemy.getHp() <= 0){
                 cout << "Enemy has died" << endl;
             }

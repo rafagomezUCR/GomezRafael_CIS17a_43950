@@ -80,12 +80,12 @@ void Characters::setHpB(int playerDf, int eAttk){
 }
      
 Rogue::Rogue(){
-    maxhp = 4300;//1000;
-    hp = 4300;//1000;
-    speed = 500;//120;
-    defense = 450;//80;
-    attack = 470;//90;
-    level = 12;//1;
+    maxhp = 1000;
+    hp = 1000;
+    speed = 120;
+    defense = 80;
+    attack = 90;
+    level = 1;
     exp = 0;
     gold = 120;
     character="Rogue";
