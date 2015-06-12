@@ -34,14 +34,12 @@ class MidTown
         void setOption(char, Characters *);
 };
 
-class Shop
+class Training
 {
     private:
         char option;
-        int *items;
     public:
-        Shop();
-        ~Shop();
+        Training();
         void getOptions();
         void setOption(char, Characters *);
 };

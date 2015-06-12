@@ -36,6 +36,6 @@ int main(int argc, char** argv) {
         Characters *ptr = &player;
         world.setOption(0, ptr);
     }
-    cout << "Your hp went to 0, I am sorry but you have died" << endl;
+    cout << endl << "End of the game" << endl;
     return 0;
 }

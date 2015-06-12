@@ -12,16 +12,8 @@
 
 using namespace std;
 
-Shop::Shop(){
-    cout << "Welcome to the shop of the mid town " << endl;
-    items = new int[36];
-    for(int i = 0; i < 36; i++){
-        items[i] = i;
-    }
-}
-
-Shop::~Shop(){
-    delete []items;
+Training::Training(){
+    cout << "Welcome to the training station of the mid town " << endl;
 }
  
 void MidTown::getOptions(){
@@ -30,9 +22,9 @@ void MidTown::getOptions(){
     cout << "Go to the west side of town " << endl;
     cout << "Go to the north side of the town " << endl;
     cout << "Go to the south part of the town " << endl;
-    cout << "Go to the shop here in the mid town " << endl;
+    cout << "Go to the training station here in the mid town " << endl;
     cout << "enter d for east, a for west, w for north, s for south, and p for "
-            << "shop " << endl;
+            << "the training station" << endl;
 }
 
 void EastTown::getOptions(){
@@ -64,30 +56,12 @@ void SouthTown::getOptions(){
     cout << "Enter w to go mid town, s for south forest " << endl;
 }
 
-void Shop::getOptions(){
-    cout << "Here in the shop you can buy items or go back to town " << endl;
-    cout << "Enter b to go back to midtown " << endl;
-    cout << "Or pick one of these items to buy " << endl;
-    cout << "                         |Mage|                 " << endl;
-    cout << "-------------------------------------------------------------------" << endl;
-    cout << "1.stick             2.robe top              3.robe bottom" << endl;
-    cout << "4.wand              5.blessed robe top      6.blessed robe bottom" << endl;
-    cout << "7.sapphire ball     8.ancestrial robe top   9.ancestrial robe bottom" << endl;
-    cout << "10.enchanted staff  11.archmage robe top    12.archmage robe bottom" << endl;
-    cout << endl;
-    cout << "                        |Warrior|              " << endl;
-    cout << "----------------------------------------------------------" << endl;
-    cout << "13.wood sword    14.bronze chainmail   15.bronze chainlegs " << endl;
-    cout << "16.silver sword  17.silver chainmail   18.silver chainlegs"<<endl;
-    cout << "19.Gold sword    20.gold chestplate    21.gold platelegs" << endl;
-    cout << "22.dragin sword  23.dragon chestplate  24.dragon platelegs" << endl;
-    cout << endl;
-    cout << "                     |Rogue|               " << endl;
-    cout << "---------------------------------------------------" << endl;
-    cout << "25.dagger          26.leather top  27.leather legs" << endl;
-    cout << "28.shank           29.ripper tux   30.ripper bottom " << endl;
-    cout << "31.ornate dagger   32.joker top    33.joker bottom " << endl;
-    cout << "34.crystal dagger  35.cpo suit     36.cpo bottom" << endl;
+void Training::getOptions(){
+    cout << "Here in the training station you can pay some gold in order"<<endl;
+    cout << "to raise some of your stats"<<endl;
+    cout << "You have to pay 100 gold in order to raise one of your"<<endl;
+    cout <<"stats by random"<<endl;
+    cout <<"Enter y to pay the 100 gold or b to leave"<<endl;
 }
 
 Forest::Forest(){;}
@@ -151,10 +125,10 @@ void MidTown::setOption(char o, Characters *player){
         south.setOption(option, player);
     }
     else if(o == 'p'){
-        Shop shop;
-        shop.getOptions();
+        Training train;
+        train.getOptions();
         cin >> option;
-        shop.setOption(option, player);
+        train.setOption(option, player);
     }
 }
 
@@ -212,6 +186,7 @@ void WestTown::inn(Characters *player){
             player->setHp2(temp);
             cout << "hp after " << player->getHp() << endl;
             cout << "Max hp after " << player->getMaxHp() << endl;
+            player->setGold(-10);
         }
         WestTown west;
         west.getOptions();
@@ -236,7 +211,12 @@ void NorthTown::setOption(char o, Characters *player){
     }
     else if(o == 'w'){
         Forest forest(o);
-        forest.getOptions();
+        cout << "You are in the first section of the forest " << endl;
+        cout << "search, go back, or continue forward" << endl;
+        cout << "Type s to search, b to back, or f to continue forward" << endl;
+        cout << "Searching has two possible outcomes" << endl;
+        cout << "One will be that you will find a monster to battle " << endl;
+        cout << "and the other will be that you will find and artifact that increases your stats" << endl;
         cin >> option;
         forest.setOption(option, player, p);
     }
@@ -258,20 +238,72 @@ void SouthTown::setOption(char o, Characters *player){
     }
 }
 
-void Shop::setOption(char o, Characters *player){
+void Training::setOption(char o, Characters *player){
+    srand(time(0));
     if(o == 'b'){
         MidTown mid;
         mid.getOptions();
         cin >> option;
         mid.setOption(option, player);
     }
-    
+    else if(o == 'y'){
+        cout << "You have " << player->getGold() << " gold"<<endl;
+        if(player->getGold() < 100){
+            cout << endl;
+            cout << "I am sorry but u don't have enough gold " << endl;
+            cout << endl;
+        }
+        else{
+            int random = rand()%4+1;
+            if(random == 1){
+                cout << endl;
+                cout << "Your hp rose by 100" << endl;
+                cout << "Your hp before is: " << player->getHp() << endl;
+                player->setMaxHp(100);
+                player->setHp(100);
+                cout << "Your hp after is: " << player->getHp();
+                cout << endl;
+            }
+            else if(random == 2){
+                cout << endl;
+                cout << "Your attack rose by 20" << endl;
+                cout << "Your attack before is: " << player->getAttack() <<endl;
+                player->setAttack(20);
+                cout << "Your attack after is: " << player->getAttack();
+                cout << endl;
+            }
+            else if(random == 3){
+                cout << endl;
+                cout << "Your defense rose by 20" << endl;
+                cout << "Your defense before is: " << player->getDefense()<<endl;
+                player->setDefense(20);
+                cout << "Your defense after is: " << player->getDefense();
+                cout << endl;
+            }
+            else{
+                cout << endl;
+                cout << "Your speed rose by 20" << endl;
+                cout << "Your speed before is: " << player->getSpeed()<<endl;
+                player->setSpeed(20);
+                cout << "Your speed after is: " << player->getSpeed();
+                cout << endl;
+            }
+            cout << "Thank you for the gold, see you later " << endl;
+            player->setGold(-100);
+            cout << "You now have " << player->getGold() << " gold"<<endl;
+            cout << endl;
+        }
+        MidTown mid;
+        mid.getOptions();
+        cin >> option;
+        mid.setOption(option, player);
+    }
 }
 
 void Forest::getOptions(){
     cout << "You are in the first section of the forest " << endl;
-    cout << "Here you can continue forward, search, or go back" << endl;
-    cout << "Type f to continue or s to search or b to back" << endl;
+    cout << "search, or go back" << endl;
+    cout << "Type s to search or b to back" << endl;
     cout << "Searching has two possible outcomes" << endl;
     cout << "One will be that you will find a monster to battle " << endl;
     cout << "and the other will be that you will find and artifact that increases your stats" << endl;
@@ -286,11 +318,6 @@ void Forest::setOption(char o, Characters *player, char p){
             cin >> option;
             east.setOption(option, player);
         }
-        else if(o == 'f'){
-            Forest forest;
-            Boss1 boss;
-            forest.battleB(player, boss, p);
-        }
         else if(o == 's'){
             string again;
             do{
@@ -302,25 +329,15 @@ void Forest::setOption(char o, Characters *player, char p){
                 else{
                     cout << "Do you want to search again " << endl;
                     cout << "If you do please type again, and if not then type"
-                            " anything for further options " << endl;
+                            " anything to return " << endl;
                     cin >> again;
                 }
             }while(again == "again");
             if(player->getHp() >0){
-                cout << "Do you wish to continue forward or go back to town " << endl;
-                cout << "Type f for forward or b for back " << endl;
-                cin >> choice;
-                if(choice == 'f'){
-                    Forest forest;
-                    Boss1 boss;
-                    forest.battleB(player, boss, p);
-                }
-                else if(choice == 'b'){
-                    EastTown east;
-                    east.getOptions();
-                    cin >> option;
-                    east.setOption(option, player);
-                }
+                EastTown east;
+                east.getOptions();
+                cin >> option;
+                east.setOption(option, player);
             }
             else{
                 int t;
@@ -334,11 +351,6 @@ void Forest::setOption(char o, Characters *player, char p){
             cin >> option;
             west.setOption(option, player);
         }
-        else if(o == 'f'){
-            Forest forest;
-            Boss1 boss;
-            forest.battleB(player, boss, p);
-        }
         else if(o == 's'){
             string again;
             do{
@@ -350,25 +362,15 @@ void Forest::setOption(char o, Characters *player, char p){
                 else{
                     cout << "Do you want to search again " << endl;
                     cout << "If you do please type again, and if not then type"
-                        " anything for further options " << endl;
+                        " anything to return " << endl;
                     cin >> again;
                 }
             }while(again == "again");
             if(player->getHp() > 0){
-                cout << "Do you wish to continue forward or go back to town " << endl;
-                cout << "Type f for forward or b for back " << endl;
-                cin >> choice;
-                if(choice == 'f'){
-                    Forest forest;
-                    Boss1 boss;
-                    forest.battleB(player, boss, p);
-                }
-                else if(choice == 'b'){
-                    WestTown west;
-                    west.getOptions();
-                    cin >> option;
-                    west.setOption(option, player);
-                }
+                WestTown west;
+                west.getOptions();
+                cin >> option;
+                west.setOption(option, player);
             }
             else{
                 int x;
@@ -384,8 +386,8 @@ void Forest::setOption(char o, Characters *player, char p){
         }
         else if(o == 'f'){
             Forest forest;
-            Boss1 boss;
-            forest.battleB(player, boss, p);
+            fBoss boss;
+            forest.battleB(player,boss,p);
         }
         else if(o == 's'){
             string again;
@@ -408,7 +410,7 @@ void Forest::setOption(char o, Characters *player, char p){
                 cin >> choice;
                 if(choice == 'f'){
                     Forest forest;
-                    Boss1 boss;
+                    fBoss boss;
                     forest.battleB(player, boss, p);
                 }
                 else if(choice == 'b'){
@@ -430,11 +432,6 @@ void Forest::setOption(char o, Characters *player, char p){
             cin >> option;
             south.setOption(option, player);
         }
-        else if(o == 'f'){
-            Forest forest;
-            Boss1 boss;
-            forest.battleB(player, boss, p);
-        }
         else if(o == 's'){
             string again;
             do{
@@ -446,25 +443,15 @@ void Forest::setOption(char o, Characters *player, char p){
                 else{
                     cout << "Do you want to search again " << endl;
                     cout << "If you do please type again, and if not then type"
-                        " anything for further options " << endl;
+                        " anything to return " << endl;
                     cin >> again;
                 }
             }while(again == "again");
             if(player->getHp() > 0){
-                cout << "Do you wish to continue forward or go back to town " << endl;
-                cout << "Type f for forward or b for back " << endl;
-                cin >> choice;
-                if(choice == 'f'){
-                    Forest forest;
-                    Boss1 boss;
-                    forest.battleB(player, boss, p);
-                }
-                else if(choice == 'b'){
-                    SouthTown south;
-                    south.getOptions();
-                    cin >> option;
-                    south.setOption(option, player);
-                }
+                SouthTown south;
+                south.getOptions();
+                cin >> option;
+                south.setOption(option, player);
             }
             else{
                 int x;
@@ -474,17 +461,80 @@ void Forest::setOption(char o, Characters *player, char p){
 }
 
 void Forest::battleB(Characters *player, Characters &enemy, char p){
-    if(p == 'w'){
-        cout << "Welcome to the first boss battle" << endl;
+    cout << "Welcome to the final boss battle" << endl;
+    cout << "Entering the final room you the " << player->getCharacter()
+            << " has unlocked a special " << endl;
+    if(player->getCharacter() == "Mage"){
+        cout << "You can now heal yourself instead of attacking "<<endl;
     }
-    else if(p == 's'){
-        cout << "Welcome to the second boss battle" << endl;
+    else if(player->getCharacter() == "Rogue"){
+        cout << "You can now attack twice"<<endl;
     }
-    else if(p == 'e'){
-        cout << "Welcome to the third boss battle" << endl;
+    else if(player->getCharacter() == "Warrior"){
+        cout << "You can lower your speed by a bit to increase your attack"
+                << " greatly permanently" << endl;
     }
-    else if(p == 'n'){
-        cout << "Welcome to the final boss battle" << endl;
+    //nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+    string go;
+    float damage;
+    int result;
+    do{
+        cout << "His hp is " << enemy.getHp() << endl;
+        cout << "Your hp is " << player->getHp() << endl;
+        if(player->getSpeed() > enemy.getSpeed()){
+            cout << "You attacked first " << endl;
+            damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100);
+            result = (enemy.getHp() - static_cast<int>(damage))*2;
+            enemy.setHp2(result);
+            if(enemy.getHp() <= 0){
+                cout << "Enemy has died" << endl;
+            }
+            else{
+                cout << "Enemies hp is: " << enemy.getHp() << endl;
+            }
+            cout << "Now the Boss attacks " << endl;
+            damage = (((((2*enemy.getLevel())+10)/250.0)*(static_cast<float>(enemy.getAttack())/player->getDefense())*90)+100);
+            result = (player->getHp() - static_cast<int>(damage))*2;
+            player->setHp2(result);
+            if(player->getHp() <= 0){
+                cout << "Your hp went to 0" << endl;
+            }
+            else{
+                cout << "Your hp is: " << player->getHp() << endl;
+            } 
+            cout << "Type anything to continue " << endl;
+            cin >> go;
+        }
+        else if(player->getSpeed() < enemy.getSpeed()){
+            cout << "Enemy attacked first " << endl;
+            damage = (((((2*enemy.getLevel())+10)/250.0)*(static_cast<float>(enemy.getAttack())/player->getDefense())*90)+100);
+            result = (player->getHp() - static_cast<int>(damage))*2;
+            player->setHp2(result);
+            if(player->getHp() <= 0){
+                cout << "Your hp went to 0" << endl;
+            }
+            else{
+                cout << "Your hp is: " << enemy.getHp() << endl;
+            }
+            cout << "Now you attack" << endl;
+            damage = (((((2*player->getLevel())+10)/250.0)*(static_cast<float>(player->getAttack())/enemy.getDefense())*90)+100);
+            result = (enemy.getHp() - static_cast<int>(damage))*2;
+            enemy.setHp2(result);
+            if(enemy.getHp() <= 0){
+                cout << "Enemy has died" << endl;
+            }
+            else{
+                cout << "Enemies hp is: " << enemy.getHp() << endl;
+            }
+            cout << "Type anything to continue " << endl;
+            cin >> go;
+        }
+    }while(enemy.getHp() > 0 && player->getHp() > 0);
+    if(player->getHp() > 0){
+        cout << "Your health at the end of the battle is " << player->getHp() << endl;
+    }
+    if(enemy.getHp() <= 0){
+        cout << "Congratulations you have defeated the final boss" << endl;
     }
 }
 
